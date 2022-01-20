@@ -4,6 +4,9 @@
 
 namespace bilberry {
 
+/*
+ * Class controlling the view for the user, mainly used for window updates
+ * */
 class Window {
   cv::Mat image;
   std::vector<cv::Point2f> imageSelectedPoints;

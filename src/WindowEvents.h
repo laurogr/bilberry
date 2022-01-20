@@ -5,6 +5,10 @@
 
 namespace bilberry {
 
+/*
+ * Class controlling the events from user input, in this case with a callback
+ * function for the mouse.
+ * */
 class WindowEvents {
  public:
   static void mouseCallBack(int event, int x, int y, int flags,
@@ -14,10 +18,13 @@ class WindowEvents {
       window->savePointFromClick(x, y);
       window->printLastPoint();
 
+      // Drawing the polygon and calculating position when the clicks are
+      // reached
       if (window->getSizeSelectedPoints() ==
           bilberry::constants::numberOfClicks) {
         window->drawLinesFromSelectedPoints();
 
+        // Sorting the imagePoints to match the objectPoints already sorted
         auto imagePointsSorted{window->getSelectedPoints()};
         std::sort(imagePointsSorted.begin(), imagePointsSorted.end(),
                   [](cv::Point2f a, cv::Point2f b) {
@@ -25,9 +32,8 @@ class WindowEvents {
                   });
 
         Algorithms::findCameraPosition(
-            bilberry::constants::objectPointSortedA4, imagePointsSorted,
-            bilberry::constants::cameraMatrix,
-            bilberry::constants::distortionCoef);
+            constants::objectPointSortedA4, imagePointsSorted,
+            constants::cameraMatrix, constants::distortionCoef);
       }
     }
   }
